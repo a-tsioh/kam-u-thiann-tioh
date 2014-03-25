@@ -11,16 +11,18 @@ at repo root directory, do the following:
 
 1. install virtualenv
 
+
     pip install virtualenv
-
-
+    
 2. init the env folder, enter virtual environment
 
+
     virtualenv env
+    
     . env/bin/activate
 
-
 3. install django and related packages
+
 
     pip install -Ur packages.txt
 
