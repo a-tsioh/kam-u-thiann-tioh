@@ -19,5 +19,3 @@ for chan in channels:
 outfile = codecs.open("Data/all.json", "w", "utf8")
 json.dump(data, outfile, ensure_ascii=False, encoding='utf-8')
 outfile.close()
-
-
