@@ -4,7 +4,6 @@ import json
 import codecs
 
 import gensim as gs
-from copy import copy
 
 datafile = "Data/parsed_keywords.json"
 
@@ -37,10 +36,17 @@ model = gs.models.LsiModel(tfidf_corpus, num_topics=50)
 model.save("lsa.model")
 
 # transformed corpus and index for similarity measures
-c2 = model[corpus]
-idx = gs.similarities.MatrixSimilarity(c2)
+idx = gs.similarities.MatrixSimilarity(model[corpus])
+vect_iter = iter(model[corpus])
+# idx = gs.similarities.MatrixSimilarity(c2)
+for post in data:
+    vect = next(vect_iter)
+    scores = enumerate(idx[vect])
+    neighbors = sorted(scores, key=lambda x: -x[1])[:20]
+    post["lsa"] = {}
+    post["lsa"]["vect"] = vect
+    post["lsa"]["neighbors"] = neighbors
 
-for i, post in enumerate(data):
-    post["parsed"]["lsa_vect"] = copy(idx[i])
-
-json.dump(data, codecs.open("Data/parsed_keywords_lsa.json", "w", "utf8"), ensure_ascii=False, encoding="utf-8")
+json.dump(data,
+          codecs.open("Data/parsed_keywords_lsa.json", "w", "utf8"),
+          ensure_ascii=False, encoding="utf-8")
