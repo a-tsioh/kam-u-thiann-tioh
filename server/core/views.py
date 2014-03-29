@@ -50,7 +50,7 @@ class Graph():
 
     def to_json(graph):
         # build local graph
-        nodes = [{"name": n["name"], "group": 1, "debug":n["local_id"]} for n in sorted(graph.nodes.values(),key=lambda x: x["local_id"])]
+        nodes = [{"name": n["name"], "group": (1 if n["local_id"]==0 else 4), "debug":n["local_id"]} for n in sorted(graph.nodes.values(),key=lambda x: x["local_id"])]
         links = [{"source": l["source"], "target":l["target"], "value":l["value"]} for l in graph.links.values()]
         return json.dumps({"nodes": nodes, "links": links}, ensure_ascii=False)
 
