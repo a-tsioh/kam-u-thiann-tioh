@@ -14,6 +14,7 @@ data = json.load(open(datafile))
 
 for post in data:
     parse = basic_parser.match(u" ".join(post["content"]))
+    #parse = basic_parser.match(post["msg"])
     if not parse:
         print "pb with", post
         sys.exit(1)

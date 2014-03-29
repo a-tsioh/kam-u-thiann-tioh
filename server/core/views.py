@@ -50,7 +50,7 @@ class Graph():
 
     def to_json(graph):
         # build local graph
-        nodes = [{"name": n["name"], "group": (1 if n["local_id"]==0 else 4), "debug":n["local_id"]} for n in sorted(graph.nodes.values(),key=lambda x: x["local_id"])]
+        nodes = [{"es_id": n["es_id"], "name": n["name"], "group": (1 if n["local_id"]==0 else 4), "debug":n["local_id"]} for n in sorted(graph.nodes.values(),key=lambda x: x["local_id"])]
         links = [{"source": l["source"], "target":l["target"], "value":l["value"]} for l in graph.links.values()]
         return json.dumps({"nodes": nodes, "links": links}, ensure_ascii=False)
 
@@ -59,9 +59,9 @@ class Graph():
 def get_doc(doc_id, index="fumao"):
     return es.get(index=index, id=doc_id)
 
-def get_neighbors(doc, index="fumao", threshold=0.9):
+def get_neighbors(doc, index="fumao", threshold=0.6):
     neighbors = []
-    for idx, score in doc["_source"]["lsa"]["neighbors"]:
+    for idx, score in doc["_source"]["lsa"]["neighbors"][:10]:
         if score < threshold:
             break
         neighbors.append((int(idx), score))
@@ -72,8 +72,10 @@ def build_graph(idx):
     doc = get_doc(idx)
     g.add_node(doc)
     g.extend_graph(doc["_id"])
-    for n, score in get_neighbors(doc):
-        g.extend_graph(n["_id"])
+    #for n, score in get_neighbors(doc):
+    #    g.extend_graph(n["_id"])
+    g.extend_graph()
+    g.extend_graph()
     g.extend_graph()
     return g.to_json()
 
@@ -86,4 +88,5 @@ def json_api(request):
 
 def index(request):
     idx = int(request.GET.get('id', 1))
-    return render_to_response('index.html', {'idx': idx})
+    doc = get_doc(idx)
+    return render_to_response('index.html', {'idx': idx, 'txt':doc["_source"]["parsed"]["content"]})

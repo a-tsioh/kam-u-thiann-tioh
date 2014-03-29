@@ -13,7 +13,9 @@ datafile = "Data/parsed_keywords.json"
 # and return a list of bigrams
 # (may try PTT-based unsup segmentation too)
 def transform_doc(s):
-    return [txt[i:i+2] for txt in re.split("[。，！？?,]", s) for i in range(len(txt) - 1) ]
+    for stopword in u"。，？！.,?我是你們在和":
+        s = s.replace(stopword, "")
+    return [txt[i:i+2] for txt in re.split("[。，！？?,]", s) for i in range(len(txt) - 1)]
     #return [s[i:i+2].encode("utf8") for i in range(len(s)-1)]
 
 
