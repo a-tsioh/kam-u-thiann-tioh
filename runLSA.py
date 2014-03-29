@@ -41,7 +41,7 @@ model.save("lsa.model")
 idx = gs.similarities.MatrixSimilarity(model[tfidf_corpus])
 vect_iter = iter(model[tfidf_corpus])
 # idx = gs.similarities.MatrixSimilarity(c2)
-for post in data[:2000]:
+for post in data:
     vect = next(vect_iter)
     scores = enumerate(idx[vect])
     neighbors = [(float(id), float(s)) for id, s in
