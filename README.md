@@ -27,6 +27,21 @@ at repo root directory, do the following:
     pip install -Ur packages.txt
 
 
+ElasticSearch initialisation
+---------------------------------
+
+1. Download from http://www.elasticsearch.org/overview/elkdownloads/
+
+2. run it
+
+    bin/elasticsearch
+
+Data Preprocessing and Indexing
+------------------------------------------
+
+    make indexed
+
+
 Backend Bootstrap
 -----------------
 
