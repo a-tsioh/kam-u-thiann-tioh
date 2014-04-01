@@ -49,7 +49,7 @@ at repo root directory, do the following
 
     . env/bin/activate
     cd server
-    python ./manage.py runserver 8000
+    ./watch 8000
 
 Now check http://localhost:8000/
 
