@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.views.generic import TemplateView
 import elasticsearch
 import json
 
@@ -79,12 +80,19 @@ def build_graph(idx):
     g.extend_graph()
     return g.to_json()
 
-def json_api(request):
-    idx = int(request.GET.get('id', 1))
+def json_api(request, *args, **kwargs):
+    idx = kwargs["id"] if 'id' in kwargs else int(request.GET.get('id',1))
     output = build_graph(idx)
     return HttpResponse(output)
 
 
+class IndexView(TemplateView):
+  template_name = "core/index.jade"
+  def get_context_data(self, **kwargs):
+    context = super(IndexView, self).get_context_data(**kwargs)
+    doc = get_doc(context.get("id") or 1)
+    context["txt"] = doc["_source"]["parsed"]["content"]
+    return context
 
 def index(request):
     idx = int(request.GET.get('id', 1))
