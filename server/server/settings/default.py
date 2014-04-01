@@ -1,4 +1,5 @@
 # Django settings for server project.
+from variables import ProjectDir
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -69,6 +70,7 @@ STATIC_URL = '/s/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    ProjectDir("static"),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -87,8 +89,10 @@ SECRET_KEY = '@3b6=#dw3$nyv5t*e(83bg)+gx=sntwt16bz3)tp#6#a%0c7bf'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+    ('pyjade.ext.django.Loader',(
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
 #     'django.template.loaders.eggs.Loader',
 )
 
