@@ -3,3 +3,4 @@ numpy
 scipy
 gensim
 elasticsearch
+pyjade==2.0.1
