@@ -1,0 +1,16 @@
+| {% load angularjs %}
+//- Use Angularjs With Django
+//-  instead of writing {{blah}}, you should write {{'blah'|aj}} for angularjs
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title index
+    link(rel="stylesheet",type="text/css",href="/s/core/css/loading.css")
+    link(rel="stylesheet",type="text/css",href="/s/core/css/index.css")
+    script(type="text/javascript",src="/s/v/js/angular.1.2.3.js")
+    script(type="text/javascript",src="/s/core/js/index.js")
+  body(ng-app="core",ng-controller="main")
+    loading(ng-class="{'invis':!loading}")
+    div.para(ng-repeat="n in data.nodes")
+      | {{'n.name'|aj}}
