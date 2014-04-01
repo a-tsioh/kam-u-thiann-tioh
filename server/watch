@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+compass watch -c server/settings/compass.config.rb &
+livescript -cwb -o core/static/core/js/ core/src/ls/ &
+./manage.py runserver $1
+echo "terminate all watcher processes..."
+kill -TERM -$$
