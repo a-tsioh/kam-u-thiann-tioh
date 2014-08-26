@@ -1,7 +1,7 @@
 
 
 Data/all.json:
-	wget -O Data/all.json http://congress-text-live.herokuapp.com/json/all/
+	wget -O Data/all.json http://padnews.linode.caasih.net/json/all/
 
 Data/parsed.json: Data/all.json
 	python preprocess.py
